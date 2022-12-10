@@ -12,7 +12,7 @@ import sqlite3
 from datetime import datetime
 
 # Указываем токен
-API_TOKEN = '5619714418:AAFnmD40Ejmonq3v9FCZi7mU_TV1qr6RyoM'
+API_TOKEN = '5674004552:AAFL4yIM4d-Z_VPadeL9k1Vc6H_fIAIIkow'
 bot = telebot.TeleBot(API_TOKEN)
 # Текст приглашения
 welcome_message = "Тестовая версия\nДобро пожаловать!\nБот предназначен для поиска вакансий на рынке труда"
