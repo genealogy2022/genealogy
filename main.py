@@ -15,7 +15,7 @@ from datetime import datetime
 API_TOKEN = '5674004552:AAFL4yIM4d-Z_VPadeL9k1Vc6H_fIAIIkow'
 bot = telebot.TeleBot(API_TOKEN)
 # Текст приглашения
-welcome_message = "Тестовая версия\nДобро пожаловать!\nБот предназначен для поиска вакансий на рынке труда"
+welcome_message = "Қош келдіңіз! Бот қазақ шежіресін көруге арналған."
 # Справочная информация
 #help_message = "Помощь"
 
@@ -330,98 +330,70 @@ def init_db():
 
 # Список жузов
 def get_juz(message):
-    #print("get_juz")
-    if message.text=="На главную":
-        send_welcome(message)
-    else:
-        juz_list = []
-        conn = sqlite3.connect('genealogy.db')
-        print("База данных SQLite подключена")
-        # Вызов функции connect() приводит к созданию объекта-экземпляра от класса Connection.
-        # Этот объект обеспечивает связь с файлом базы данных, представляет конкретную БД в программе                     
-        cursor = conn.cursor()
-        sql = "SELECT title FROM juz"
-        #print(sql)
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        for row in results:
-            juz_list.append(row[0])        
-        # Закрыть объект cursor после завершения работы.
-        cursor.close()
-        # Закрыть соединение после завершения работы.
-        conn.close()
-        print("База данных SQLite отключена")    
-        return juz_list
+    #print("get_juz")    
+    juz_list = []
+    conn = sqlite3.connect('genealogy.db')
+    print("База данных SQLite подключена")
+    # Вызов функции connect() приводит к созданию объекта-экземпляра от класса Connection.
+    # Этот объект обеспечивает связь с файлом базы данных, представляет конкретную БД в программе                     
+    cursor = conn.cursor()
+    sql = "SELECT title FROM juz"
+    #print(sql)
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    for row in results:
+        juz_list.append(row[0])        
+    # Закрыть объект cursor после завершения работы.
+    cursor.close()
+    # Закрыть соединение после завершения работы.
+    conn.close()
+    print("База данных SQLite отключена")    
+    return juz_list
 
 # Список племен
 def get_tribe(message):
-    #print("get_tribe")
-    if message.text=="На главную":
-        send_welcome(message)
-    else:
-        tribe_list = []
-        conn = sqlite3.connect('genealogy.db')
-        print("База данных SQLite подключена")
-        # Вызов функции connect() приводит к созданию объекта-экземпляра от класса Connection.
-        # Этот объект обеспечивает связь с файлом базы данных, представляет конкретную БД в программе                     
-        cursor = conn.cursor()
-        sql = "SELECT juz.title AS jus, tribe.title AS tribe FROM tribe INNER JOIN juz ON tribe.juz_id = juz.id WHERE juz.title = '" + message.text + "'"
-        #print(sql)
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        for row in results:
-            tribe_list.append(row[1])        
-        # Закрыть объект cursor после завершения работы.
-        cursor.close()
-        # Закрыть соединение после завершения работы.
-        conn.close()
-        print("База данных SQLite отключена")   
-        return tribe_list
+    #print("get_tribe")    
+    tribe_list = []
+    conn = sqlite3.connect('genealogy.db')
+    print("База данных SQLite подключена")
+    # Вызов функции connect() приводит к созданию объекта-экземпляра от класса Connection.
+    # Этот объект обеспечивает связь с файлом базы данных, представляет конкретную БД в программе                     
+    cursor = conn.cursor()
+    sql = "SELECT juz.title AS jus, tribe.title AS tribe FROM tribe INNER JOIN juz ON tribe.juz_id = juz.id WHERE juz.title = '" + message.text + "'"
+    #print(sql)
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    for row in results:
+        tribe_list.append(row[1])        
+    # Закрыть объект cursor после завершения работы.
+    cursor.close()
+    # Закрыть соединение после завершения работы.
+    conn.close()
+    print("База данных SQLite отключена")   
+    return tribe_list
 
 # Список родов
 def get_clan(message):
     #print("get_clan")
-    if message.text=="На главную":
-        send_welcome(message)
-    else:
-        clan_list = []
-        conn = sqlite3.connect('genealogy.db')
-        print("База данных SQLite подключена")
-        # Вызов функции connect() приводит к созданию объекта-экземпляра от класса Connection.
-        # Этот объект обеспечивает связь с файлом базы данных, представляет конкретную БД в программе                     
-        cursor = conn.cursor()
-        sql = "SELECT juz.title AS jus, tribe.title AS tribe, clan.title AS clan FROM tribe INNER JOIN juz ON tribe.juz_id = juz.id  INNER JOIN clan ON clan.tribe_id = tribe.id WHERE  tribe.title = '" + message.text + "'"
-        #print(sql)
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        for row in results:
-            clan_list.append(row[2])        
-        # Закрыть объект cursor после завершения работы.
-        cursor.close()
-        # Закрыть соединение после завершения работы.
-        conn.close()
-        print("База данных SQLite отключена")   
-        return clan_list
-
-# Жуз
-class Juz:
-    def __init__(self, id, title):
-        self.id = id
-        self.title = title
-
-# Племя
-class Tribe:
-    def __init__(self, id, juz_id, title):
-        self.id = id
-        self.juz_id = juz_id
-        self.title = title
-
-# Род
-class Clan:
-    def __init__(self, id, tribe_id, title):
-        self.id = id
-        self.tribe_id = tribe_id
-        self.title = title
+    clan_list = []
+    conn = sqlite3.connect('genealogy.db')
+    print("База данных SQLite подключена")
+    # Вызов функции connect() приводит к созданию объекта-экземпляра от класса Connection.
+    # Этот объект обеспечивает связь с файлом базы данных, представляет конкретную БД в программе                     
+    cursor = conn.cursor()
+    sql = "SELECT juz.title AS jus, tribe.title AS tribe, clan.title AS clan FROM tribe INNER JOIN juz ON tribe.juz_id = juz.id  INNER JOIN clan ON clan.tribe_id = tribe.id WHERE  tribe.title = '" + message.text + "'"
+    #print(sql)
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    for row in results:
+        clan_list.append(row[2])        
+    # Закрыть объект cursor после завершения работы.
+    cursor.close()
+    # Закрыть соединение после завершения работы.
+    conn.close()
+    print("База данных SQLite отключена")   
+    return clan_list
+        
 
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
@@ -454,7 +426,7 @@ def process_menu1(message):
             # Указываем название кнопок, добавляем клавиатуру
             for i in range(0, len(tribe_list)):
                 markup.add(tribe_list[i])
-            # Кнопка в начало (На главную)
+            # Кнопка в начало (Басына)
             markup.add("Басына")            
             # Сообщение
             msg = bot.reply_to(message, """Таңдаңыз""", reply_markup=markup)
@@ -476,7 +448,7 @@ def process_menu2(message):
             # Указываем название кнопок, добавляем клавиатуру
             for i in range(0, len(clan_list)):
                 markup.add(clan_list[i])
-            # Кнопка в начало (На главную)
+            # Кнопка в начало (Басына)
             markup.add("Басына")            
             # Сообщение
             msg = bot.reply_to(message, """Таңдаңыз""", reply_markup=markup)
@@ -510,11 +482,7 @@ def process_menu3(message):
                              "\n<b>Ғабдулманап(Мантай)</b> " + 
                              "\n<b>Әсет</b> " + 
                              "\n<b>Ескендір</b> ", parse_mode=telegram.ParseMode.HTML )                
-            send_welcome(message)
-        else:
-            #msg = bot.reply_to(message, """Таңдаңыз""")
-            #bot.register_next_step_handler(msg, send_welcome)
-            send_welcome(message)
+        send_welcome(message)
     except Exception as e:
         print('process_menu3', str(e))
         bot.reply_to(message, 'упс')
@@ -524,7 +492,7 @@ init_db()
 # Enable saving next step handlers to file "./.handlers-saves/step.save".
 # Delay=2 means that after any change in next step handlers (e.g. calling register_next_step_handler())
 # saving will hapen after delay 2 seconds.
-bot.enable_save_next_step_handlers(delay=2)
+bot.enable_save_next_step_handlers(delay=1)
 # Load next_step_handlers from save file (default "./.handlers-saves/step.save")
 # WARNING It will work only if enable_save_next_step_handlers was called!
 bot.load_next_step_handlers()
